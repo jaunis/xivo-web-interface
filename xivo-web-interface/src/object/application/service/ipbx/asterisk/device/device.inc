@@ -316,20 +316,27 @@ class xivo_application_service_asterisk_device extends xivo_application_asterisk
 
 		$raw_config = &$globalconfig['raw_config'];
 
-		if (isset($raw_config['sip_lines']) === true
-		&& isset($raw_config['sip_lines'][$line_num]) === true)
+		if (strcasecmp($raw_config['protocol'], XIVO_SRE_IPBX_AST_PROTO_SCCP) == 0)
 		{
-			unset($raw_config['sip_lines'][$line_num]);
-			if (empty($raw_config['sip_lines']) === true)
+			$this->mode_autoprov($synchronize);
+		}
+		else
+		{
+			if (isset($raw_config['sip_lines']) === true
+			&& isset($raw_config['sip_lines'][$line_num]) === true)
 			{
-				unset($raw_config['sip_lines']);
-				unset($raw_config['funckeys']);
-				$this->mode_autoprov($synchronize);
-			}
-			if($this->_provdconfig->edit($globalconfig['id'],$globalconfig) === false)
-			{
-				dwho_report::push('error', 'Can\'t remove line from config: '.$globalconfig['id']);
-				return(false);
+				unset($raw_config['sip_lines'][$line_num]);
+				if (empty($raw_config['sip_lines']) === true)
+				{
+					unset($raw_config['sip_lines']);
+					unset($raw_config['funckeys']);
+					$this->mode_autoprov($synchronize);
+				}
+				if($this->_provdconfig->edit($globalconfig['id'],$globalconfig) === false)
+				{
+					dwho_report::push('error', 'Can\'t remove line from config: '.$globalconfig['id']);
+					return(false);
+				}
 			}
 		}
 		return(true);

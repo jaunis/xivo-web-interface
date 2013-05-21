@@ -1168,9 +1168,6 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 				}
 				elseif ($this->_device->remove_line($this->_info['linefeatures']['num']) === false)
 					return(false);
-				elseif ($this->_info['linefeatures']['protocol'] === XIVO_SRE_IPBX_AST_PROTO_SCCP
-				&& $this->_sccpdevice->init_device($device['devicefeatures']['mac'],'') === false)
-					return(false);
 			}
 			// Add the new device associated.
 			if (empty($rs['device']) === false)
@@ -1439,9 +1436,6 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 		if(($device = $this->_device->get($this->_info['linefeatures']['device'],null,true)) === false)
 			return(true);
 		elseif($this->_device->remove_line($this->_info['linefeatures']['num']) === false)
-			return(false);
-		elseif ($this->_info['linefeatures']['protocol'] === XIVO_SRE_IPBX_AST_PROTO_SCCP
-		&& $this->_sccpdevice->init_device($device['devicefeatures']['mac'],'') === false)
 			return(false);
 
 		return(true);
