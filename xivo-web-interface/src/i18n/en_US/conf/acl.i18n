@@ -125,10 +125,10 @@ Control system
 Asterisk Log Files
 
 ; acl(service-ipbx-control_system-reload)
-Reload IPBX
+Reload Asterisk
 
 ; acl(service-ipbx-control_system-restart)
-Restart IPBX
+Restart Asterisk
 
 ; acl(service-ipbx-control_system-cti_restart)
 Restart CTI server

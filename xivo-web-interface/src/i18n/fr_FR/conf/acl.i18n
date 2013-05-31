@@ -125,10 +125,10 @@ Système de contrôle
 Journaux d'événements
 
 ; acl(service-ipbx-control_system-reload)
-Recharger IPBX
+Recharger Asterisk
 
 ; acl(service-ipbx-control_system-restart)
-Redémarrer IPBX
+Redémarrer Asterisk
 
 ; acl(service-ipbx-control_system-cti_restart)
 Redémarrage du serveur CTI
