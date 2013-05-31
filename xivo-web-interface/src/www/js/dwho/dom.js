@@ -590,4 +590,15 @@ dwho.dom.call_onload = function()
                                 dwho.dom.callback_onload[property][1]);
 };
 
+dwho.dom.confirm_twice = function(question,confirmation)
+{
+	if (confirm(question)) {
+		if (confirm(confirmation)) {
+			return(true);
+		}
+	}	
+	return(false);
+};
+
+
 dwho.dom.add_event('load',window,dwho.dom.call_onload);

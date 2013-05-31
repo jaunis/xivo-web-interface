@@ -385,8 +385,9 @@ $dhtml = &$this->get_module('dhtml');
 							   XIVO_SRE_IPBX_LABEL),
 						'service/ipbx/control_system/restart',
 						null,
-						'onclick="return(confirm(\''.$dhtml->escape($this->bbf('controlsystem_ipbxrestart_confirm',
-												       XIVO_SRE_IPBX_LABEL)).'\'));"'),
+						'onclick="return(dwho.dom.confirm_twice(\''.$dhtml->escape($this->bbf('controlsystem_ipbxrestart_confirm',
+												       XIVO_SRE_IPBX_LABEL)).'\', \''.$dhtml->escape($this->bbf('controlsystem_ipbxrestart_confirm_really',
+												       XIVO_SRE_IPBX_LABEL)).'\'));"'), 										
 				'</dd>';
 		endif;
 

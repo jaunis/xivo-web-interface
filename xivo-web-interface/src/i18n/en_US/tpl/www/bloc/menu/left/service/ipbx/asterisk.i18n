@@ -178,6 +178,12 @@ Are you sure you want to restart?
 ; controlsystem_ipbxrestart_confirm
 Are you sure you want to restart %s?
 
+; controlsystem_ipbxrestart_confirm_really(unknown)
+Attention, all established calls will likely be lost. Are you really sure you want to RESTART?
+
+; controlsystem_ipbxrestart_confirm_really
+Attention, all established calls will likely be lost. Are you really sure you want to RESTART %s?
+ 
 ; mn_left_ctisettings-restart
 Restart CTI server
 

@@ -163,6 +163,12 @@ Etes-vous certain de vouloir redémarrer ?
 ; controlsystem_ipbxrestart_confirm
 Etes-vous certain de vouloir redémarrer %s ?
 
+; controlsystem_ipbxrestart_confirm_really(unknown)
+Attention, tous les appels établis seront probablement perdus. Êtes-vous vraiment certain de vouloir REDEMARRER ?
+
+; controlsystem_ipbxrestart_confirm_really
+Attention, tous les appels établis seront probablement perdus. Êtes-vous vraiment certain de vouloir REDEMARRER %s ?
+
 ; mn_left_ctisettings-restart
 Redémarrer le serveur CTI
 
