@@ -1294,6 +1294,11 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 				dwho_report::push('error', 'Can\'t edit device');
 				return(false);
 			}
+			elseif($this->_device->associate_line($line_id, false) === false)
+			{
+				dwho_report::push('error', 'Can\'t associate device');
+				return(false);
+			}
 			elseif ($new_device['protocol'] === XIVO_SRE_IPBX_AST_PROTO_SCCP
 			&& $this->_sccpdevice->init_device($device['device']['mac'],$new_device['name'],$vm_number) === false)
 			{
@@ -1710,6 +1715,12 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 			$arr['linefeatures'] =  $this->get_result_var('linefeatures', 0);
 
+			// keep the old device, it will be updated by provisioning functions (SIP only for now)
+			if ($protocolname === XIVO_SRE_IPBX_AST_PROTO_SIP)
+			{
+				$arr['linefeatures']['device'] = $this->_info['linefeatures'][0]['device'];
+			}
+
 			$arr['user_id'] = $user_id;
 			$arr['protocol'] = array();
 
@@ -1866,14 +1877,20 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			// Add the new device associated.
 			if (empty($new_device['device']) === false)
 			{
+				$line_id = $new_device['id'];
 				if (($device = $this->_device->get($new_device['device'])) === false)
 				{
 					dwho_report::push('error', 'device doesn\'t exist: '.$new_device['device']);
 					return(false);
 				}
-				elseif($this->_provddevice->update_config_from_line($device['device']['id'],$new_device['id']) === false)
+				elseif($this->_provddevice->update_config_from_line($device['device']['id'],$line_id) === false)
 				{
 					dwho_report::push('error', 'Can\'t update config device');
+					return(false);
+				}
+				elseif($this->_device->associate_line($line_id, false) === false)
+				{
+					dwho_report::push('error', 'Can\'t associate device');
 					return(false);
 				}
 				elseif ($new_device['protocol'] === XIVO_SRE_IPBX_AST_PROTO_SCCP

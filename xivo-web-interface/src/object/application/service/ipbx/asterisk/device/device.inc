@@ -30,6 +30,7 @@ class xivo_application_service_asterisk_device extends xivo_application_asterisk
 	protected $_provdplugin 	= false;
 	protected $_sccpdevice		= false;
 	protected $_device_api		= false;
+	protected $_line_api		= false;
 
 	public function __construct(&$service,$param=null,$components=true)
 	{
@@ -41,7 +42,8 @@ class xivo_application_service_asterisk_device extends xivo_application_asterisk
 		|| ($this->_provdplugin = &$_XOBJ->get_module('provdplugin')) === false
 		|| ($this->_provdconfig = &$_XOBJ->get_module('provdconfig')) === false
 		|| ($_RAPI = &dwho_gct::get('xivo_restapi')) === false
-		|| ($this->_device_api = $_RAPI->get_ressource('device')) === false)
+		|| ($this->_device_api = $_RAPI->get_ressource('device')) === false
+		|| ($this->_line_api = $_RAPI->get_ressource('line')) === false)
 			return(false);
 
 		return(true);
@@ -157,10 +159,7 @@ class xivo_application_service_asterisk_device extends xivo_application_asterisk
 
 	public function remove_line($line_id, $synchronize=false)
 	{
-		if(dwho_issa('device',$this->_info) === false)
-			return(false);
-
-		$rs = $this->_device_api->remove_line($this->_info['device']['id'], $line_id);
+		$rs = $this->_line_api->remove_device($line_id);
 
 		if ($synchronize === true)
 			$this->synchronize();
@@ -182,7 +181,7 @@ class xivo_application_service_asterisk_device extends xivo_application_asterisk
 			dwho_report::push('error', 'fail to edit config for this device: '.$this->_info['device']['id']);
 			return(false);
 		}
-		elseif (($rs = $this->_device_api->associate_line($this->_info['device']['id'], $line_id)) === false)
+		elseif (($rs = $this->_line_api->associate_device($line_id, $this->_info['device']['id'])) === false)
 		{
 			dwho_report::push('error', 'fail to associate line to device: '.$this->_info['device']['id']);
 			return(false);

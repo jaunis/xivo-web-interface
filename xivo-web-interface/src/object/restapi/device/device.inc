@@ -188,34 +188,6 @@ class restapi_ressource_device extends xivo_restapi_ressource_abstract
 
 		return(true);
 	}
-
-	public function associate_line($device_id, $line_id)
-	{
-		$uri = $this->_build_uri(array($device_id, 'associate_line', $line_id));
-		$rs = $this->request_get($uri);
-
-		if($this->_status_code !== 204)
-		{
-			dwho_report::push('error', 'fail to associate line on the device: '.$rs[0]);
-			return(false);
-		}
-
-		return(true);
-	}
-
-	public function remove_line($device_id, $line_id)
-	{
-		$uri = $this->_build_uri(array($device_id, 'remove_line', $line_id));
-		$rs = $this->request_get($uri);
-
-		if($this->_status_code !== 204)
-		{
-			dwho_report::push('error', 'fail to remove line on the device: '.$rs[0]);
-			return(false);
-		}
-
-		return(true);
-	}
 }
 
 ?>
